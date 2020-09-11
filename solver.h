@@ -18,20 +18,20 @@ public:
     MoveTree(Board board_) : 
         board(board_), move(Move()), parent(nullptr), headDist(0)
     {
-        hash = board.hash();
+        hash = (this->board).hash();
     }
     MoveTree(Board board_, Move move_, MoveTree* parent_) : 
         board(board_), move(move_), parent(parent_) 
     {
-        headDist = parent->getDist() + 1;
-        hash = board.hash();
+        headDist = (this->parent)->getDist() + 1;
+        hash = (this->board).hash();
     }
 
-    Move getMove() { return move; }
-    Board getBoard() { return board; }
-    MoveTree* getParent() { return parent; }
-    string getHash() { return hash; }
-    int getDist() { return headDist; }
+    Move getMove() { return this->move; }
+    Board getBoard() { return this->board; }
+    MoveTree* getParent() { return this->parent; }
+    string getHash() { return this->hash; }
+    int getDist() { return this->headDist; }
 };
 
 
@@ -43,9 +43,11 @@ private:
     MoveTree* winningTail = nullptr;
 public:
     Solver() {}
-    void solve(Board b);
+
+    int getDist() { return (this->winningTail) ? this->winningTail->getDist() : -1 ;}
+
+    bool solve(Board b);
     vector<Move> getMoves();
-    void printMoves();
 };
 
 #endif

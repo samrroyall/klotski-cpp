@@ -8,24 +8,27 @@ using namespace std;
 
 class Board {
 private:
+    bool isSolved;
     int rows = 5, cols = 4;
     int winRow, winCol;
-    Block* fourBlock = nullptr;
     vector<Block> blocks;
+    vector<Move> moves;
     vector<vector<Block*>> spaces; 
 
-    void moveBlock(Block* b, vector<Dir> dirs);
-    vector<Dir> getOpenDirs(Block b);
-    vector<Move> getMoves(Block* b);
     bool isValid(Block* b);
     void insertBlocks();
+    vector<Move> getBlockMoves(Block* b);
+    vector<Dir> getBlockOpenDirs(Block b);
+    void setMoves();
+    void moveBlock(Block* b, vector<Dir> dirs);
 public:
     Board(vector<Block> blocks, int winRow_, int winCol_);
     Board(const Board& b, Move m);
 
-    bool solved();
+    bool solved() {return this->isSolved; }
+    vector<Move> getMoves() { return this->moves; }
+
     string hash();
-    vector<Move> moves();
     void print(ostream& os); 
 };
 

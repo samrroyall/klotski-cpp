@@ -13,8 +13,8 @@ public:
     Move() : block(Block()), dirs{None} {}
     Move(Block block_, vector<Dir> dirs_) : block(block_), dirs(dirs_) {}
 
-    vector<Dir> getDirs() { return dirs; }
-    Block getBlock() { return block; }
+    vector<Dir> getDirs() { return this->dirs; }
+    Block getBlock() { return this->block; }
 };
 
 inline ostream& operator<<(ostream& os, Move m) {

@@ -13,25 +13,25 @@ public:
     Block(int _row, int _col, int _numRows) : row(_row), col(_col), numRows(_numRows), numCols(_numRows) {}
     Block(int _row, int _col, int _numRows, int _numCols) : row(_row), col(_col), numRows(_numRows), numCols(_numCols) {}
 
-    int getSize() { return numRows*numCols; }
-    int getRow() { return row; }
-    int getNumRows() { return numRows; }
-    int getCol() { return col; }
-    int getNumCols() { return numCols; }
+    int getSize() { return this->numRows*this->numCols; }
+    int getRow() { return this->row; }
+    int getNumRows() { return this->numRows; }
+    int getCol() { return this->col; }
+    int getNumCols() { return this->numCols; }
     
     inline void move(Dir d) {
         switch (d) {
             case Left: {
-                col--;
+                this->col--;
                 break;
             } case Right: {
-                col++;
+                this->col++;
                 break;
             } case Up: {
-                row--;
+                this->row--;
                 break;
             } case Down: {
-                row++;
+                this->row++;
                 break;
             } case None: {
                 break;
@@ -41,7 +41,7 @@ public:
 
     inline void print(ostream& os) { 
         string blockName;
-        switch (this->getSize()) {
+        switch (this->numRows*this->numCols) {
             case 1: {
                 blockName = "OneBlock";
                 break;
@@ -60,7 +60,7 @@ public:
                 break;
             }
         }
-        os << blockName << " at (" << this->getRow() << "," << this->getCol() << ")";
+        os << blockName << " at (" << this->row << "," << this->col << ")";
     }
 };
 
