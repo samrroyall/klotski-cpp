@@ -2,7 +2,6 @@
 #define BLOCK_H
 
 #include "dir.h"
-#include <iostream>
 
 using namespace std;
 
@@ -71,7 +70,7 @@ inline ostream& operator<<(ostream& os, Block& b) {
 }   
 
 inline bool operator==(Block& b1, Block& b2) {
-    return (b1.getRow() == b2.getRow() &&
+    return (b1.getRow() == b2.getRow() &&  
             b1.getCol() == b2.getCol() && 
             b1.getNumRows() == b2.getNumRows() &&
             b1.getNumCols() == b2.getNumCols());

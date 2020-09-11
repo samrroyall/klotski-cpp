@@ -2,8 +2,9 @@
 #define BOARD_H
 
 #include "move.h"
-#include <iostream> 
-#include <vector> 
+#include <string>
+
+using namespace std;
 
 class Board {
 private:
@@ -13,10 +14,11 @@ private:
     vector<Block> blocks;
     vector<vector<Block*>> spaces; 
 
+    void moveBlock(Block* b, vector<Dir> dirs);
+    vector<Dir> getOpenDirs(Block b);
+    vector<Move> getMoves(Block* b);
     bool isValid(Block* b);
-    vector<Move> getMoves(Block b);
     void insertBlocks();
-    void moveBlock(Block* b, Dir d);
 public:
     Board(vector<Block> blocks, int winRow_, int winCol_);
     Board(const Board& b, Move m);

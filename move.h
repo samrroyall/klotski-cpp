@@ -2,25 +2,32 @@
 #define MOVE_H 
 
 #include "block.h"
-#include "dir.h"
-#include <iostream>
 
 using namespace std;
 
 class Move {
 private:
-    Dir dir;
+    vector<Dir> dirs;
     Block block;
 public:
-    Move() : block(Block()), dir(None) {}
-    Move(Block block_, Dir dir_) : block(block_), dir(dir_) {}
+    Move() : block(Block()), dirs{None} {}
+    Move(Block block_, vector<Dir> dirs_) : block(block_), dirs(dirs_) {}
 
-    Dir getDir() { return dir; }
+    vector<Dir> getDirs() { return dirs; }
     Block getBlock() { return block; }
 };
 
 inline ostream& operator<<(ostream& os, Move m) {
-    return os << "Move " << m.getBlock() << " " << m.getDir();
+    os << "Move " << m.getBlock() << " ";
+    vector<Dir> dirs = m.getDirs();
+    for (int i = 0; i < dirs.size(); i++) { 
+        if (i < dirs.size() - 1) {
+            os << dirs[i] << ", "; 
+        } else {
+            os << dirs[i];
+        }
+    }
+    return os;
 }
 
 #endif
