@@ -29,6 +29,7 @@ public:
     vector<Move> getMoves() { return this->moves; }
 
     string hash();
+    string nextHash(Move m);
     void print(ostream& os); 
 };
 

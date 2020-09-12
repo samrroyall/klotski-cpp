@@ -37,9 +37,7 @@ public:
 
 class Solver {
 private:
-    unordered_set<string> configs;
-    queue<MoveTree*> queue;
-    MoveTree* head;
+    MoveTree* head = nullptr;
     MoveTree* winningTail = nullptr;
 public:
     Solver() {}

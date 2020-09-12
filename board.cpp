@@ -180,6 +180,25 @@ string Board::hash() {
     return boardString;
 }
 
+string Board::nextHash(Move m) {
+    Block* bp = nullptr;
+    for (int i = 0; i < (this->blocks).size(); i++) {
+        if (this->blocks[i] == m.getBlock()) {
+            bp = &(this->blocks[i]);
+            break;
+        }
+    }
+    if (!bp) {
+        cout << "nextHash cannot be found" << endl;
+        return "";
+    } else {
+        moveBlock(bp, m.getDirs()); // move block
+        string res = this->hash(); // get new hash
+        moveBlock(bp, oppositeDirs(m.getDirs())); // unmove block
+        return res;
+    }
+}
+
 void Board::print(ostream& os) {
     for (int i = 0; i < this->rows; i++) {
         for (int j = 0; j < this->cols; j++) {

@@ -10,7 +10,7 @@ vector<int> getInts(string s) {
         string chars;
         while (*it != ' ' && it != s.end()) { chars += *(it++); };
         res.push_back(stoi(chars));
-        while (*it == ' ' && it != s.end()) { it++; } // handle trailing spacesk
+        while (*it == ' ' && it != s.end()) { it++; } // handle trailing spaces
     }
     return res;
 }
@@ -54,22 +54,20 @@ int main() {
 
     // solve the Klotski puzzle
     Solver s = Solver(); // instantiate solver
-    cout << "Finding optimal path..." << endl;
-    bool success = s.solve(Board(blocks, winning_row, winning_col)); // generate tree and find optimal path
-    cout << "Optimal path of length " << s.getDist() << " found!" << endl;
-    vector<Move> optimalMoves = s.getMoves(); // get moves
+    cout << "Finding successful path..." << endl;
+    bool success = s.solve(Board(blocks, winning_row, winning_col)); // generate tree and find successful path
+    cout << "Path of length " << s.getDist() << " found!" << endl;
+    vector<Move> moves = s.getMoves(); // get moves
 
     // start shell
     if (success) {
         cout << "Type 'next' for next move. Type 'exit' to exit shell." << endl;
-        int i = 0;
-        while(i < optimalMoves.size()) {
+        for (int i = 0; i < moves.size(); i++) {
             cout << "> ";
             string input;
             getline(cin, input); 
             if (input == "next") {
-                cout << i+1 << ". " << optimalMoves[i] << endl;
-                i++;
+                cout << i+1 << ". " << moves[i] << endl;
             } else if (input == "exit") {
                 break;
             }

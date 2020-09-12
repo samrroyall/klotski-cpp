@@ -4,35 +4,41 @@
 
 bool Solver::solve(Board b) {
     Solver::head = new MoveTree(b); // create MoveTree head
-    Solver::queue.push(head); // push initial board to queue
-    Solver::configs.emplace(Solver::head->getHash());
-    while (!Solver::queue.empty()) {
-        MoveTree* mt = Solver::queue.front(); // peek MoveTree from queue
-        // if board is solved, check how many steps it took, update 
+    queue<MoveTree*> queue; // initialize queue
+    queue.push(head); // push initial board to queue
+    unordered_set<string> configs; // initialize board configs set
+    configs.emplace(Solver::head->getHash());
+    while (!queue.empty()) {
+        MoveTree* mt = queue.front(); // peek MoveTree from queue
+        // if board is solved, check distance to head, update accordingly
         if ((mt->getBoard()).solved()) { 
             Solver::winningTail = mt;
             return true;
         } 
         vector<Move> moves = (mt->getBoard()).getMoves(); // grab available moves for current board
         // push valid boards following from moves to queue
+        int validChildren = 0;
         for (int i = 0; i < moves.size(); i++) {
-            Board newBoard = Board(
-                mt->getBoard(), // previous board
-                moves[i] // move
-            );
-            // ensure board configuration has not been seen on current branch
-            //unordered_set<string> prevConfigs = mt->getConfigs();
-            if (Solver::configs.find(newBoard.hash()) == Solver::configs.end()) { 
+            string nextHash = (mt->getBoard()).nextHash(moves[i]); // get hash of next move
+            // ensure board configuration has not been seen
+            if (configs.find(nextHash) == configs.end()) { 
+                // create new tree from board created by current move
+                Board newBoard = Board(
+                    mt->getBoard(), // previous board
+                    moves[i] // move
+                );
                 MoveTree* newMT = new MoveTree(
                     newBoard, // new board
                     moves[i], // move
                     mt // parent 
                 );
-                Solver::configs.emplace(newMT->getHash());
-                Solver::queue.push(newMT); // push new tree to queue
+                configs.emplace(nextHash); // add new board configuration hash to configs 
+                queue.push(newMT); // push new tree to queue
+                validChildren++;
             }
         }
-        Solver::queue.pop();
+        if (!validChildren) { delete mt; } // delete unsolved leaves
+        queue.pop();
     }
     return false;
 }
