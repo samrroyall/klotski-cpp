@@ -5,33 +5,26 @@
 #include <unordered_set>
 #include <queue>
 
-using namespace std;
-
 class MoveTree {
 private:
     Board board;
     Move move;
     MoveTree* parent;
-    string hash;
     int headDist;
 public:
-    MoveTree(Board board_) : 
-        board(board_), move(Move()), parent(nullptr), headDist(0)
-    {
-        hash = (this->board).hash();
-    }
-    MoveTree(Board board_, Move move_, MoveTree* parent_) : 
+    MoveTree(Board& board_) : 
+        board(board_), move(Move()), parent(nullptr), headDist(0) {}
+    MoveTree(Board& board_, const Move& move_, MoveTree* parent_) : 
         board(board_), move(move_), parent(parent_) 
     {
         headDist = (this->parent)->getDist() + 1;
-        hash = (this->board).hash();
     }
 
-    Move getMove() { return this->move; }
-    Board getBoard() { return this->board; }
-    MoveTree* getParent() { return this->parent; }
-    string getHash() { return this->hash; }
-    int getDist() { return this->headDist; }
+    Board& getBoard() { return this->board; }
+    const Move& getMove() const { return this->move; }
+    MoveTree* getParent() const { return this->parent; }
+    std::string getHash() const { return (this->board).hash(); }
+    int getDist() const { return this->headDist; }
 };
 
 
@@ -42,10 +35,10 @@ private:
 public:
     Solver() {}
 
-    int getDist() { return (this->winningTail) ? this->winningTail->getDist() : -1 ;}
+    int getDist() const { return (this->winningTail) ? this->winningTail->getDist() : -1 ;}
 
     bool solve(Board b);
-    vector<Move> getMoves();
+    std::vector<Move> getMoves();
 };
 
 #endif

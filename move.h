@@ -3,23 +3,21 @@
 
 #include "block.h"
 
-using namespace std;
-
 class Move {
 private:
-    vector<Dir> dirs;
+    std::vector<Dir> dirs;
     Block block;
 public:
-    Move() : block(Block()), dirs{None} {}
-    Move(Block block_, vector<Dir> dirs_) : block(block_), dirs(dirs_) {}
+    Move() : block(Block()), dirs{Dir::None} {}
+    Move(Block block_, std::vector<Dir> dirs_) : block(block_), dirs(dirs_) {}
 
-    vector<Dir> getDirs() { return this->dirs; }
-    Block getBlock() { return this->block; }
+    std::vector<Dir> getDirs() const { return this->dirs; }
+    Block getBlock() const { return this->block; }
 };
 
-inline ostream& operator<<(ostream& os, Move m) {
+inline std::ostream& operator<<(std::ostream& os, const Move& m) {
     os << "Move " << m.getBlock() << " ";
-    vector<Dir> dirs = m.getDirs();
+    std::vector<Dir> dirs = m.getDirs();
     for (int i = 0; i < dirs.size(); i++) { 
         if (i < dirs.size() - 1) {
             os << dirs[i] << ", "; 

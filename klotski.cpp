@@ -1,6 +1,7 @@
 #include "solver.h"
-#include <iostream>
 #include <fstream>
+
+using namespace std;
 
 vector<int> getInts(string s) {
     vector<int> res;
@@ -55,13 +56,15 @@ int main() {
     // solve the Klotski puzzle
     Solver s = Solver(); // instantiate solver
     cout << "Finding successful path..." << endl;
-    bool success = s.solve(Board(blocks, winning_row, winning_col)); // generate tree and find successful path
-    cout << "Path of length " << s.getDist() << " found!" << endl;
-    vector<Move> moves = s.getMoves(); // get moves
+    Board initialConfig = Board(blocks, winning_row, winning_col);
+    bool success = s.solve(initialConfig); // generate tree and find successful path
 
-    // start shell
+    // return moves on path
     if (success) {
+        cout << "Path of length " << s.getDist() << " found!" << endl;
+        vector<Move> moves = s.getMoves(); // get moves
         cout << "Type 'next' for next move. Type 'exit' to exit shell." << endl;
+        // start shell
         for (int i = 0; i < moves.size(); i++) {
             cout << "> ";
             string input;

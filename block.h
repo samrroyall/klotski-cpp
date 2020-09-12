@@ -3,23 +3,23 @@
 
 #include "dir.h"
 
-using namespace std;
-
 class Block {
 private:
     int row, col, numRows, numCols;
 public:
     Block() : row(-1), col(-1), numRows(0), numCols(0) {}
-    Block(int _row, int _col, int _numRows) : row(_row), col(_col), numRows(_numRows), numCols(_numRows) {}
-    Block(int _row, int _col, int _numRows, int _numCols) : row(_row), col(_col), numRows(_numRows), numCols(_numCols) {}
+    Block(int _row, int _col, int _numRows) : 
+        row(_row), col(_col), numRows(_numRows), numCols(_numRows) {}
+    Block(int _row, int _col, int _numRows, int _numCols) : 
+        row(_row), col(_col), numRows(_numRows), numCols(_numCols) {}
 
-    int getSize() { return this->numRows*this->numCols; }
-    int getRow() { return this->row; }
-    int getNumRows() { return this->numRows; }
-    int getCol() { return this->col; }
-    int getNumCols() { return this->numCols; }
+    int getSize() const { return this->numRows*this->numCols; }
+    int getRow() const { return this->row; }
+    int getNumRows() const { return this->numRows; }
+    int getCol() const { return this->col; }
+    int getNumCols() const { return this->numCols; }
     
-    inline void move(Dir d) {
+    inline void move(const Dir& d) {
         switch (d) {
             case Left: {
                 this->col--;
@@ -39,8 +39,8 @@ public:
         }
     }
 
-    inline void print(ostream& os) { 
-        string blockName;
+    inline void print(std::ostream& os) const { 
+        std::string blockName;
         switch (this->numRows*this->numCols) {
             case 1: {
                 blockName = "OneBlock";
@@ -64,12 +64,12 @@ public:
     }
 };
 
-inline ostream& operator<<(ostream& os, Block& b) {
+inline std::ostream& operator<<(std::ostream& os, const Block& b) {
     b.print(os);
     return os;
 }   
 
-inline bool operator==(Block& b1, Block& b2) {
+inline bool operator==(const Block& b1, const Block& b2) {
     return (b1.getRow() == b2.getRow() &&  
             b1.getCol() == b2.getCol() && 
             b1.getNumRows() == b2.getNumRows() &&

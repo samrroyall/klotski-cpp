@@ -4,35 +4,33 @@
 #include "move.h"
 #include <string>
 
-using namespace std;
-
 class Board {
 private:
     bool isSolved;
     int rows = 5, cols = 4;
     int winRow, winCol;
-    vector<Block> blocks;
-    vector<Move> moves;
-    vector<vector<Block*>> spaces; 
+    std::vector<Block> blocks;
+    std::vector<Move> moves;
+    std::vector<std::vector<Block*>> spaces; 
 
-    bool isValid(Block* b);
+    bool isValid(Block& b);
     void insertBlocks();
-    vector<Move> getBlockMoves(Block* b);
-    vector<Dir> getBlockOpenDirs(Block b);
     void setMoves();
-    void moveBlock(Block* b, vector<Dir> dirs);
+    void moveBlock(Block* b, const std::vector<Dir>& dirs);
+    std::vector<Move> getBlockMoves(Block* b);
+    std::vector<Dir> getBlockOpenDirs(const Block& b) const;
 public:
-    Board(vector<Block> blocks, int winRow_, int winCol_);
-    Board(const Board& b, Move m);
+    Board(std::vector<Block> blocks, int winRow_, int winCol_);
+    Board(const Board& b, const Move& m);
 
-    bool solved() {return this->isSolved; }
-    vector<Move> getMoves() { return this->moves; }
+    bool solved() const {return this->isSolved; }
+    std::vector<Move> getMoves() const { return this->moves; }
 
-    string hash();
-    string nextHash(Move m);
-    void print(ostream& os); 
+    std::string hash() const;
+    std::string nextHash(const Move& m);
+    void print(std::ostream& os) const; 
 };
 
-ostream& operator<<(ostream& os, Board& b);
+std::ostream& operator<<(std::ostream& os, const Board& b);
 
 #endif

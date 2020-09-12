@@ -4,37 +4,43 @@
 #include <iostream>
 #include <vector>
 
-using namespace std;
-
 enum Dir {Left, Right, Up, Down, None};
 
-inline Dir oppositeDir(Dir d) {
+inline Dir oppositeDir(const Dir& d) {
+    Dir oppDir = None;
     switch (d) {
         case Left: {
-            return Right;
+            oppDir = Right;
+            break;
         } case Right: {
-            return Left;
+            oppDir = Left;
+            break;
         } case Up: {
-            return Down;
+            oppDir = Down;
+            break;
         } case Down: {
-            return Up;
+            oppDir = Up;
+            break;
         } case None: {
-            return None;
+            oppDir = None;
+            break;
         } default: {
-            return None;
+            oppDir = None;
+            break;
         }
     }
+    return oppDir;
 }
 
-inline vector<Dir> oppositeDirs(vector<Dir> dirs) {
-    vector<Dir> oppDirs(dirs.size());
+inline std::vector<Dir> oppositeDirs(const std::vector<Dir>& dirs) {
+    std::vector<Dir> oppDirs(dirs.size());
     for (int i = 0; i < dirs.size(); i++) {
         oppDirs[dirs.size()-1-i] = oppositeDir(dirs[i]);
     }
     return oppDirs;
 }
 
-inline ostream& operator<<(ostream& os, const Dir& dir) {
+inline std::ostream& operator<<(std::ostream& os, const Dir& dir) {
     switch (dir) {
         case Left: {
             os << "Left";
