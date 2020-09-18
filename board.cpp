@@ -174,7 +174,13 @@ string Board::hash() const {
     for (int i = 0; i < this->rows; i++) {
         for (int j = 0; j < this->cols; j++) {
             const Block* b = this->spaces[i][j];
-            boardString += ((b) ? to_string(b->getSize()) : "0");
+            string cellString = "0";
+            if (b && b->getSize() != 2) {
+                cellString = to_string(b->getSize());
+            } else if (b && b->getSize() == 2) {
+                cellString = to_string(b->getSize()) + ((b->getNumCols() == 1) ? "V" : "H");
+            } 
+            boardString += cellString;
         }
     }
     return boardString;
