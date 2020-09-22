@@ -65,12 +65,13 @@ int main() {
         vector<Move> moves = s.getMoves(); // get moves
         cout << "Type 'next' for next move. Type 'exit' to exit shell." << endl;
         // start shell
-        for (int i = 0; i < moves.size(); i++) {
+        int i = 0;
+        while (i < moves.size()) {
             cout << "> ";
             string input;
             getline(cin, input); 
             if (input == "next") {
-                cout << i+1 << ". " << moves[i] << endl;
+                cout << i+1 << ". " << moves[i++] << endl;
             } else if (input == "exit") {
                 break;
             }
